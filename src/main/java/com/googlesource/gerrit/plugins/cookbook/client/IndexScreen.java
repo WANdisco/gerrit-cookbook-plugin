@@ -14,7 +14,9 @@
 
 package com.googlesource.gerrit.plugins.cookbook.client;
 
+import com.google.gerrit.client.Resources;
 import com.google.gerrit.plugin.client.screen.Screen;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,6 +26,8 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -41,12 +45,19 @@ class IndexScreen extends VerticalPanel {
 
   private TextBox usernameTxt;
   private TextArea greetingTxt;
+  private Resources RESOURCES = GWT.create(Resources.class);
 
   IndexScreen() {
     setStyleName("cookbook-panel");
 
+    Panel labelImagePanel = new HorizontalPanel();
     Panel usernamePanel = new VerticalPanel();
-    usernamePanel.add(new Label("Username:"));
+    Image img = new Image(RESOURCES.info());
+    img.setTitle("User to send greetings to");
+    labelImagePanel.add(new Label("Username"));
+    labelImagePanel.add(img);
+    labelImagePanel.add(new Label(":"));
+    usernamePanel.add(labelImagePanel);
     usernameTxt = new TextBox() {
       @Override
       public void onBrowserEvent(Event event) {
