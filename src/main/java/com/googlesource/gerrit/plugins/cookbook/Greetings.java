@@ -14,13 +14,13 @@
 
 package com.googlesource.gerrit.plugins.cookbook;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.google.gerrit.extensions.restapi.Response;
 import com.google.gerrit.extensions.restapi.RestReadView;
 import com.google.gerrit.server.change.RevisionResource;
 import com.google.inject.Inject;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 class Greetings implements RestReadView<RevisionResource> {
 

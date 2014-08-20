@@ -14,12 +14,12 @@
 
 package com.googlesource.gerrit.plugins.cookbook;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.webui.TopMenu;
 import com.google.inject.Inject;
+
+import java.util.List;
 
 public class HelloTopMenu implements TopMenu {
   private final List<MenuEntry> menuEntries;
