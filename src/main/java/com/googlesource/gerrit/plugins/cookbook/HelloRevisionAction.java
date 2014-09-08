@@ -14,7 +14,7 @@
 
 package com.googlesource.gerrit.plugins.cookbook;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 import com.google.gerrit.extensions.restapi.RestModifyView;
 import com.google.gerrit.extensions.webui.UiAction;
@@ -47,7 +47,7 @@ class HelloRevisionAction implements UiAction<RevisionResource>,
     return String.format("%s %s from change %s, patch set %d!",
         greeting,
         Strings.isNullOrEmpty(input.message)
-            ? Objects.firstNonNull(user.get().getUserName(), "world")
+            ? MoreObjects.firstNonNull(user.get().getUserName(), "world")
             : input.message,
         rev.getChange().getId().toString(),
         rev.getPatchSet().getPatchSetId());
