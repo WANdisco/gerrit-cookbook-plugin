@@ -1,4 +1,4 @@
-cookbook-plugin hello-project
+@PLUGIN@ hello-project
 =============================
 
 NAME

@@ -1,4 +1,4 @@
-cookbook-plugin hello
+@PLUGIN@ hello
 =====================
 
 NAME
@@ -7,7 +7,7 @@ say-hello - Print our "Hello world" message
 
 SYNOPSIS
 --------
->     http://<host>:<port>/cookbook-plugin/say-hello/
+>     http://<host>:<port>/plugins/@PLUGIN@/say-hello/
 
 DESCRIPTION
 -----------
