@@ -14,13 +14,16 @@
 
 package com.googlesource.gerrit.plugins.cookbook;
 
+import com.google.gerrit.extensions.webui.BranchWebLink;
 import com.google.gerrit.extensions.webui.PatchSetWebLink;
 import com.google.gerrit.extensions.webui.ProjectWebLink;
 
-public class HelloWeblink implements PatchSetWebLink, ProjectWebLink {
+public class HelloWeblink implements PatchSetWebLink, ProjectWebLink, BranchWebLink {
   private String name = "HelloLink";
   private String placeHolderUrlProject =
       "http://my.hellolink.com/project=%s";
+  private String placeHolderUrlProjectBranch =
+      "http://my.hellolink.com/project=%s-branch=%s";
   private String placeHolderUrlProjectCommit =
       placeHolderUrlProject + "/commit=%s";
   private String myImageUrl = "http://placehold.it/16x16.gif";
@@ -43,5 +46,10 @@ public class HelloWeblink implements PatchSetWebLink, ProjectWebLink {
   @Override
   public String getImageUrl() {
     return myImageUrl;
+  }
+
+  @Override
+  public String getBranchUrl(String projectName, String branchName) {
+    return String.format(placeHolderUrlProjectBranch, projectName, branchName);
   }
 }
