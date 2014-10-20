@@ -14,9 +14,11 @@
 
 package com.googlesource.gerrit.plugins.cookbook;
 
+import com.google.gerrit.extensions.common.WebLinkInfo;
 import com.google.gerrit.extensions.webui.BranchWebLink;
 import com.google.gerrit.extensions.webui.PatchSetWebLink;
 import com.google.gerrit.extensions.webui.ProjectWebLink;
+import com.google.gerrit.extensions.webui.WebLinkTarget;
 
 public class HelloWeblink implements PatchSetWebLink, ProjectWebLink, BranchWebLink {
   private String name = "HelloLink";
@@ -29,32 +31,26 @@ public class HelloWeblink implements PatchSetWebLink, ProjectWebLink, BranchWebL
   private String myImageUrl = "http://placehold.it/16x16.gif";
 
   @Override
-  public String getLinkName() {
-    return name ;
+  public WebLinkInfo getBranchWebLink(String projectName, String branchName) {
+    return new WebLinkInfo(name,
+        myImageUrl,
+        String.format(placeHolderUrlProjectBranch, projectName, branchName),
+        WebLinkTarget.BLANK);
   }
 
   @Override
-  public String getPatchSetUrl(String project, String commit) {
-    return String.format(placeHolderUrlProjectCommit, project, commit);
+  public WebLinkInfo getProjectWeblink(String projectName) {
+    return new WebLinkInfo(name,
+        myImageUrl,
+        String.format(placeHolderUrlProject, projectName),
+        WebLinkTarget.BLANK);
   }
 
   @Override
-  public String getProjectUrl(String project) {
-    return String.format(placeHolderUrlProject, project);
-  }
-
-  @Override
-  public String getImageUrl() {
-    return myImageUrl;
-  }
-
-  @Override
-  public String getBranchUrl(String projectName, String branchName) {
-    return String.format(placeHolderUrlProjectBranch, projectName, branchName);
-  }
-
-  @Override
-  public String getTarget() {
-    return Target.BLANK;
+  public WebLinkInfo getPathSetWebLink(String projectName, String commit) {
+    return new WebLinkInfo(name,
+        myImageUrl,
+        String.format(placeHolderUrlProjectCommit, projectName, commit),
+        WebLinkTarget.BLANK);
   }
 }
