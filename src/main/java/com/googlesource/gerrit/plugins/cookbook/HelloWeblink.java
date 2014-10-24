@@ -18,7 +18,6 @@ import com.google.gerrit.extensions.common.WebLinkInfo;
 import com.google.gerrit.extensions.webui.BranchWebLink;
 import com.google.gerrit.extensions.webui.PatchSetWebLink;
 import com.google.gerrit.extensions.webui.ProjectWebLink;
-import com.google.gerrit.extensions.webui.WebLinkTarget;
 
 public class HelloWeblink implements PatchSetWebLink, ProjectWebLink, BranchWebLink {
   private String name = "HelloLink";
@@ -35,7 +34,7 @@ public class HelloWeblink implements PatchSetWebLink, ProjectWebLink, BranchWebL
     return new WebLinkInfo(name,
         myImageUrl,
         String.format(placeHolderUrlProjectBranch, projectName, branchName),
-        WebLinkTarget.BLANK);
+        Target.BLANK);
   }
 
   @Override
@@ -43,7 +42,7 @@ public class HelloWeblink implements PatchSetWebLink, ProjectWebLink, BranchWebL
     return new WebLinkInfo(name,
         myImageUrl,
         String.format(placeHolderUrlProject, projectName),
-        WebLinkTarget.BLANK);
+        Target.BLANK);
   }
 
   @Override
@@ -51,6 +50,6 @@ public class HelloWeblink implements PatchSetWebLink, ProjectWebLink, BranchWebL
     return new WebLinkInfo(name,
         myImageUrl,
         String.format(placeHolderUrlProjectCommit, projectName, commit),
-        WebLinkTarget.BLANK);
+        Target.BLANK);
   }
 }
