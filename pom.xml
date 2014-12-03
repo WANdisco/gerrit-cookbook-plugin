@@ -99,6 +99,7 @@ limitations under the License.
       <groupId>com.google.gerrit</groupId>
       <artifactId>gerrit-plugin-gwtui</artifactId>
       <version>${Gerrit-ApiVersion}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
