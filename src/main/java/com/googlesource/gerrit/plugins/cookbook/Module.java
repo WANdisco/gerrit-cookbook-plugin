@@ -19,7 +19,7 @@ import static com.google.gerrit.server.project.ProjectResource.PROJECT_KIND;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gerrit.extensions.annotations.Exports;
-import com.google.gerrit.extensions.common.InheritableBoolean;
+import com.google.gerrit.extensions.client.InheritableBoolean;
 import com.google.gerrit.extensions.events.UsageDataPublishedListener;
 import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.extensions.restapi.RestApiModule;
