@@ -22,7 +22,7 @@ import com.google.inject.Inject;
 
 import org.eclipse.jgit.internal.storage.file.FileSnapshot;
 
-import java.io.File;
+import java.nio.file.Path;
 
 /**
  * Dynamic provider of Gerrit plugins derived by *.ssh files under $GERRIT_SITE/plugins.
@@ -46,22 +46,22 @@ public class HelloSshPluginProvider implements ServerPluginProvider {
   }
 
   @Override
-  public boolean handles(File srcFile) {
-    return srcFile.getName().endsWith(SSH_EXT);
+  public boolean handles(Path srcPath) {
+    return srcPath.getFileName().toString().endsWith(SSH_EXT);
   }
 
   @Override
-  public String getPluginName(File srcFile) {
-    String srcFileName = srcFile.getName();
-    return srcFileName.substring(0, srcFileName.length() - SSH_EXT.length());
+  public String getPluginName(Path srcPath) {
+    String name = srcPath.getFileName().toString();
+    return name.substring(0, name.length() - SSH_EXT.length());
   }
 
   @Override
-  public ServerPlugin get(File srcFile, FileSnapshot snapshot,
+  public ServerPlugin get(Path srcPath, FileSnapshot snapshot,
       PluginDescription pluginDescriptor) throws InvalidPluginException {
-    String name = getPluginName(srcFile);
+    String name = getPluginName(srcPath);
     return new ServerPlugin(name, pluginDescriptor.canonicalUrl,
-        pluginDescriptor.user, srcFile, snapshot,
+        pluginDescriptor.user, srcPath, snapshot,
         new HelloSshPluginContentScanner(name), pluginDescriptor.dataDir,
         getClass().getClassLoader());
   }

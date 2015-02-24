@@ -20,9 +20,9 @@ import com.google.gerrit.sshd.CommandMetaData;
 import com.google.gerrit.sshd.SshCommand;
 import com.google.inject.Inject;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * SSH command defined by dynamically registered plugins.
@@ -31,7 +31,7 @@ import java.nio.file.Files;
 @CommandMetaData(name = "print", description = "Print content of the plugin file")
 public final class HelloSshCommand extends SshCommand {
   private final String pluginName;
-  private final File pluginDir;
+  private final Path pluginDir;
 
   @Inject
   public HelloSshCommand(@PluginName String pluginName, SitePaths sitePaths) {
@@ -41,11 +41,11 @@ public final class HelloSshCommand extends SshCommand {
 
   @Override
   public void run() {
-    File pluginFile = new File(pluginDir, pluginName + ".ssh");
+    Path pluginPath = pluginDir.resolve(pluginName + ".ssh");
     try {
-      Files.copy(pluginFile.toPath(), out);
+      Files.copy(pluginPath, out);
     } catch (IOException e) {
-      throw new RuntimeException("Cannot read plugin content of " + pluginFile,
+      throw new RuntimeException("Cannot read plugin content of " + pluginPath,
           e);
     }
   }
