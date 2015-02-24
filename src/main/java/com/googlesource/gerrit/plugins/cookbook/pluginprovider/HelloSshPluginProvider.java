@@ -25,16 +25,22 @@ import org.eclipse.jgit.internal.storage.file.FileSnapshot;
 import java.nio.file.Path;
 
 /**
- * Dynamic provider of Gerrit plugins derived by *.ssh files under $GERRIT_SITE/plugins.
- *
+ * Dynamic provider of Gerrit plugins derived by *.ssh files under
+ * $GERRIT_SITE/plugins.
+ * <p>
  * Example of how to define a dynamic Gerrit plugin provider to register
  * a new plugin based on the content of *.ssh files.
- *
+ * <p>
  * This provider allows to define a Gerrit plugin by simply dropping a .ssh file
  * (e.g. hello.ssh) under $GERRIT_SITE/plugins.
+ * <p>
  * Once the file is created a new plugin is automatically loaded with the name
- * without extension of the .ssh file (e.g. hello) and a new 'cat' SSH command is
- * automatically available from the registered plugin.
+ * without extension of the .ssh file (e.g. hello) and a new 'cat' SSH command
+ * is automatically available from the registered plugin.
+ * <p>
+ * The 'cat' command will print the contents of the .ssh file, along with the
+ * contents of any arguments, resolved against the plugin's data directory
+ * $GERRIT_SITE/data/name.
  */
 public class HelloSshPluginProvider implements ServerPluginProvider {
   private static final String SSH_EXT = ".ssh";
