@@ -14,39 +14,64 @@
 
 package com.googlesource.gerrit.plugins.cookbook.pluginprovider;
 
+import com.google.gerrit.extensions.annotations.PluginData;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.server.config.SitePaths;
 import com.google.gerrit.sshd.CommandMetaData;
 import com.google.gerrit.sshd.SshCommand;
 import com.google.inject.Inject;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import org.kohsuke.args4j.Argument;
 
-/**
- * SSH command defined by dynamically registered plugins.
- *
- */
-@CommandMetaData(name = "print", description = "Print content of the plugin file")
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+/** SSH command defined by dynamically registered plugins. */
+@CommandMetaData(name = "cat", description = "Print content of plugin file")
 public final class HelloSshCommand extends SshCommand {
   private final String pluginName;
-  private final File pluginDir;
+  private final Path pluginDir;
+  private final Path dataDir;
+
+  @Argument(usage = "files in data directory to print")
+  private List<String> files = new ArrayList<>();
 
   @Inject
-  public HelloSshCommand(@PluginName String pluginName, SitePaths sitePaths) {
+  public HelloSshCommand(@PluginName String pluginName,
+      SitePaths sitePaths,
+      @PluginData Path dataDir) {
     this.pluginName = pluginName;
-    this.pluginDir = sitePaths.plugins_dir;
+    this.pluginDir = sitePaths.plugins_dir.normalize();
+    this.dataDir = dataDir.normalize();
   }
 
   @Override
   public void run() {
-    File pluginFile = new File(pluginDir, pluginName + ".ssh");
+    Path pluginPath = pluginDir.resolve(pluginName + ".ssh");
+    printOne(pluginPath);
+    for (String name : files) {
+      Path p = dataDir.resolve(name).normalize();
+      if (!p.startsWith(dataDir)) {
+        throw new RuntimeException(p + " is outside data directory " + dataDir);
+      }
+      printOne(p);
+    }
+  }
+
+  private void printOne(Path p) {
     try {
-      Files.copy(pluginFile.toPath(), out);
+      Files.copy(p, out);
     } catch (IOException e) {
-      throw new RuntimeException("Cannot read plugin content of " + pluginFile,
-          e);
+      try (PrintWriter w = new PrintWriter(err)) {
+        w.write("Error reading contents of ");
+        w.write(p.toAbsolutePath().toString());
+        w.write(": \n");
+        e.printStackTrace(w);
+      }
     }
   }
 }
