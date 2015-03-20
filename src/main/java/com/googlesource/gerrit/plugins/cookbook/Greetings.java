@@ -35,7 +35,7 @@ class Greetings implements RestReadView<RevisionResource> {
     return Response.ok(l);
   }
 
-  class GreetInfo {
+  static class GreetInfo {
     String message;
     String country;
     String href;
