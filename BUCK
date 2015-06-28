@@ -21,6 +21,7 @@ java_test(
   name = 'cookbook_tests',
   srcs = glob(['src/test/java/**/*.java']),
   labels = ['cookbook-plugin'],
+  source_under_test = [':cookbook-plugin__plugin'],
   deps = [
     ':cookbook-plugin__plugin',
     '//lib:junit',
