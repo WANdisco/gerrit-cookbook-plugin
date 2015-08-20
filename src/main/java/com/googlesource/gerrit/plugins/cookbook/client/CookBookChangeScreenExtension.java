@@ -18,8 +18,8 @@ import com.google.gerrit.client.GerritUiExtensionPoint;
 import com.google.gerrit.client.info.ChangeInfo;
 import com.google.gerrit.plugin.client.extension.Panel;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwtexpui.clippy.client.CopyableLabel;
 
 /**
