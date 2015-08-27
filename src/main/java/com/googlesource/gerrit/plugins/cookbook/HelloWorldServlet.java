@@ -46,12 +46,12 @@ class HelloWorldServlet extends HttpServlet {
       final HttpServletResponse rsp) throws IOException, ServletException {
     rsp.setContentType("text/html");
     rsp.setCharacterEncoding("UTF-8");
-    final Writer out = rsp.getWriter();
-    out.write("<html>");
-    out.write("<body>");
-    out.write("<h2>Hello world!</h2>");
-    out.write("</body>");
-    out.write("</html>");
-    out.close();
+    try (Writer out = rsp.getWriter()) {
+      out.write("<html>");
+      out.write("<body>");
+      out.write("<h2>Hello world!</h2>");
+      out.write("</body>");
+      out.write("</html>");
+    }
   }
 }
