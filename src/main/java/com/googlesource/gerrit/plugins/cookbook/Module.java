@@ -29,6 +29,7 @@ import com.google.gerrit.extensions.webui.PatchSetWebLink;
 import com.google.gerrit.extensions.webui.ProjectWebLink;
 import com.google.gerrit.extensions.webui.TopMenu;
 import com.google.gerrit.server.config.ProjectConfigEntry;
+import com.google.gerrit.server.git.validators.CommitValidationListener;
 import com.google.gerrit.server.git.validators.MergeValidationListener;
 import com.google.gerrit.server.git.validators.UploadValidationListener;
 import com.google.gerrit.server.plugins.ServerPluginProvider;
@@ -66,6 +67,8 @@ public class Module extends AbstractModule {
         .to(HashtagValidator.class);
     DynamicSet.bind(binder(), NewProjectCreatedListener.class)
         .to(ProjectCreatedListener.class);
+    DynamicSet.bind(binder(), CommitValidationListener.class)
+        .to(CommitValidator.class);
     configurePluginParameters();
   }
 
