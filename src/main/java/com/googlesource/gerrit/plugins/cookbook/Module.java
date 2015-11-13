@@ -78,8 +78,8 @@ public class Module extends AbstractModule {
     configurePluginParameters();
 
     bind(ChangeOperatorFactory.class)
-       .annotatedWith(Exports.named("sample"))
-       .to(SampleOperator.class);
+        .annotatedWith(Exports.named("sample"))
+        .to(SampleOperator.class);
   }
 
   private void configurePluginParameters() {
