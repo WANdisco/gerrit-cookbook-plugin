@@ -21,7 +21,6 @@ import com.google.gerrit.reviewdb.server.ReviewDb;
 import com.google.gerrit.server.ApprovalsUtil;
 import com.google.gerrit.server.IdentifiedUser;
 import com.google.gerrit.server.git.CodeReviewCommit;
-import com.google.gerrit.server.git.CommitMergeStatus;
 import com.google.gerrit.server.git.validators.MergeValidationException;
 import com.google.gerrit.server.git.validators.MergeValidationListener;
 import com.google.gerrit.server.project.ProjectState;
@@ -67,12 +66,14 @@ public class MergeUserValidator implements MergeValidationListener {
     PatchSetApproval psa =
         approvalsUtil.getSubmitter(reviewDb.get(), commit.notes(), patchSetId);
     if (psa == null) {
-      throw new MergeValidationException(CommitMergeStatus.NO_PATCH_SET);
+      throw new MergeValidationException(
+          "Missing submitter record for " + patchSetId);
     }
     IdentifiedUser submitter =
         identifiedUserFactory.create(psa.getAccountId());
     if (!submitter.getCapabilities().canAdministrateServer()) {
-      throw new MergeValidationException(CommitMergeStatus.MISSING_DEPENDENCY);
+      throw new MergeValidationException("Submitter " + submitter.getNameEmail()
+          + " is not a site administrator");
     }
   }
 }
