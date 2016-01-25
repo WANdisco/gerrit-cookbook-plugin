@@ -14,7 +14,7 @@
 
 package com.googlesource.gerrit.plugins.cookbook.client;
 
-import com.google.gerrit.client.info.AccountPreferencesInfo;
+import com.google.gerrit.client.info.GeneralPreferences;
 import com.google.gerrit.plugin.client.Plugin;
 import com.google.gerrit.plugin.client.extension.Panel;
 import com.google.gerrit.plugin.client.rpc.RestApi;
@@ -50,9 +50,9 @@ public class ChangeScreenPreferencePanel extends VerticalPanel {
 
   ChangeScreenPreferencePanel() {
     new RestApi("accounts").id("self").view("preferences")
-        .get(new AsyncCallback<AccountPreferencesInfo>() {
+        .get(new AsyncCallback<GeneralPreferences>() {
           @Override
-          public void onSuccess(AccountPreferencesInfo result) {
+          public void onSuccess(GeneralPreferences result) {
             display(result);
           }
 
@@ -63,7 +63,7 @@ public class ChangeScreenPreferencePanel extends VerticalPanel {
         });
   }
 
-  private void display(final AccountPreferencesInfo info) {
+  private void display(final GeneralPreferences info) {
     Label heading = new Label(Plugin.get().getName() + " plugin");
     heading.setStyleName("smallHeading");
     add(heading);
@@ -120,9 +120,9 @@ public class ChangeScreenPreferencePanel extends VerticalPanel {
         info.setUrlAliases(urlAliases);
 
         new RestApi("accounts").id("self").view("preferences")
-            .put(info, new AsyncCallback<AccountPreferencesInfo>() {
+            .put(info, new AsyncCallback<GeneralPreferences>() {
               @Override
-              public void onSuccess(AccountPreferencesInfo result) {
+              public void onSuccess(GeneralPreferences result) {
                 Plugin.get().refreshUserPreferences();
                 showSavedStatus();
               }
