@@ -16,6 +16,7 @@ package com.googlesource.gerrit.plugins.cookbook.client;
 
 import com.google.gerrit.client.GerritUiExtensionPoint;
 import com.google.gerrit.client.info.ChangeInfo;
+import com.google.gerrit.client.info.ChangeInfo.RevisionInfo;
 import com.google.gerrit.plugin.client.extension.Panel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
@@ -37,18 +38,25 @@ public class CookBookChangeScreenExtension extends VerticalPanel {
   CookBookChangeScreenExtension(Panel panel) {
     ChangeInfo change =
         panel.getObject(GerritUiExtensionPoint.Key.CHANGE_INFO).cast();
+    RevisionInfo rev =
+        panel.getObject(GerritUiExtensionPoint.Key.REVISION_INFO).cast();
 
-    Grid g = new Grid(1, 2);
+    Grid g = new Grid(2, 2);
     g.addStyleName("infoBlock");
     CellFormatter fmt = g.getCellFormatter();
 
     g.setText(0, 0, "Numeric Change ID");
     fmt.addStyleName(0, 0, "header");
+    fmt.addStyleName(0, 0, "topmost");
+    fmt.addStyleName(0, 1, "topmost");
     g.setWidget(0, 1, new CopyableLabel(Integer.toString(change._number())));
     add(g);
 
-    fmt.addStyleName(0, 0, "topmost");
-    fmt.addStyleName(0, 1, "topmost");
-    fmt.addStyleName(0, 0, "bottomheader");
+    g.setText(1, 0, "Patch Set ID");
+    fmt.addStyleName(1, 0, "header");
+    fmt.addStyleName(1, 0, "bottomheader");
+    fmt.addStyleName(1, 1, "bottomheader");
+    g.setWidget(1, 1, new CopyableLabel(String.valueOf(rev._number())));
+    add(g);
   }
 }
