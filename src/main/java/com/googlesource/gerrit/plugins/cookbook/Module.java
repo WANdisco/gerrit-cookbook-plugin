@@ -27,9 +27,12 @@ import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.extensions.restapi.RestApiModule;
 import com.google.gerrit.extensions.webui.BranchWebLink;
 import com.google.gerrit.extensions.webui.FileHistoryWebLink;
+import com.google.gerrit.extensions.webui.GwtPlugin;
+import com.google.gerrit.extensions.webui.JavaScriptPlugin;
 import com.google.gerrit.extensions.webui.PatchSetWebLink;
 import com.google.gerrit.extensions.webui.ProjectWebLink;
 import com.google.gerrit.extensions.webui.TopMenu;
+import com.google.gerrit.extensions.webui.WebUiPlugin;
 import com.google.gerrit.server.config.ProjectConfigEntry;
 import com.google.gerrit.server.git.validators.CommitValidationListener;
 import com.google.gerrit.server.git.validators.MergeValidationListener;
@@ -80,6 +83,17 @@ public class Module extends AbstractModule {
     bind(ChangeOperatorFactory.class)
         .annotatedWith(Exports.named("sample"))
         .to(SampleOperator.class);
+
+    DynamicSet.bind(binder(), WebUiPlugin.class)
+        .toInstance(new JavaScriptPlugin("greetings.js"));
+    DynamicSet.bind(binder(), WebUiPlugin.class)
+        .toInstance(new JavaScriptPlugin("hello-change.js"));
+    DynamicSet.bind(binder(), WebUiPlugin.class)
+        .toInstance(new JavaScriptPlugin("hello-project.js"));
+    DynamicSet.bind(binder(), WebUiPlugin.class)
+        .toInstance(new JavaScriptPlugin("hello-revision.js"));
+    DynamicSet.bind(binder(), WebUiPlugin.class)
+        .toInstance(new GwtPlugin("cookbook"));
   }
 
   private void configurePluginParameters() {
