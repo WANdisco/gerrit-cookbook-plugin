@@ -36,7 +36,7 @@ class HelloWorldServlet extends HttpServlet {
   private static final Logger log = LoggerFactory.getLogger(HelloWorldServlet.class);
 
   @Inject
-  public HelloWorldServlet(@PluginName String pluginName,
+  HelloWorldServlet(@PluginName String pluginName,
       @PluginCanonicalWebUrl String url) {
     log.info(String.format("Cookbook Plugin '%s' at url %s", pluginName, url));
   }
