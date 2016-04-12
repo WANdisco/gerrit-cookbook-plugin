@@ -27,7 +27,7 @@ public final class PrintHelloWorldCommand extends SshCommand {
   private String name = "world";
 
   @Option(name = "--french", usage = "output in French?")
-  private boolean french = false;
+  private boolean french;
 
   @Override
   public void run() {
