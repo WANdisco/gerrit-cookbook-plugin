@@ -25,15 +25,16 @@ public class CookbookIT extends PluginDaemonTest {
 
   @Test
   public void printTest() throws Exception {
-    assertThat(sshSession.exec("cookbook print")).isEqualTo("Hello world!\n");
-    assertThat(sshSession.hasError()).isFalse();
+    assertThat(adminSshSession.exec("cookbook print"))
+        .isEqualTo("Hello world!\n");
+    assertThat(adminSshSession.hasError()).isFalse();
   }
 
   @Test
   public void revisionTest() throws Exception {
     createChange();
     RestResponse response =
-        adminSession.post("/changes/1/revisions/1/cookbook~hello-revision");
+        adminRestSession.post("/changes/1/revisions/1/cookbook~hello-revision");
     assertThat(response.getEntityContent())
         .contains("Hello admin from change 1, patch set 1!");
   }
