@@ -19,6 +19,7 @@ import static com.google.gerrit.server.project.ProjectResource.PROJECT_KIND;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gerrit.extensions.annotations.Exports;
+import com.google.gerrit.extensions.api.projects.ProjectConfigEntryType;
 import com.google.gerrit.extensions.client.InheritableBoolean;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.extensions.events.NewProjectCreatedListener;
@@ -121,7 +122,7 @@ public class Module extends AbstractModule {
        .annotatedWith(Exports.named("reviewers"))
         .toInstance(
             new ProjectConfigEntry("Reviewers", null,
-                ProjectConfigEntry.Type.ARRAY, null, false,
+                ProjectConfigEntryType.ARRAY, null, false,
                 "Users or groups can be provided as reviewers"));
   }
 }
