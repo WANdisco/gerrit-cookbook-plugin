@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.gerrit.extensions.annotations.Exports;
 import com.google.gerrit.extensions.api.projects.ProjectConfigEntryType;
 import com.google.gerrit.extensions.client.InheritableBoolean;
+import com.google.gerrit.extensions.config.ExternalIncludedIn;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.extensions.events.NewProjectCreatedListener;
 import com.google.gerrit.extensions.events.UsageDataPublishedListener;
@@ -78,6 +79,8 @@ public class Module extends AbstractModule {
     DynamicSet.bind(binder(), NewProjectCreatedListener.class)
         .to(ProjectCreatedListener.class);
     configurePluginParameters();
+    DynamicSet.bind(binder(), ExternalIncludedIn.class)
+        .to(DeployedOnIncludedInExtension.class);
 
     bind(ChangeOperatorFactory.class)
         .annotatedWith(Exports.named("sample"))
